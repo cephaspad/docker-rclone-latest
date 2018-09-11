@@ -1,15 +1,16 @@
 FROM debian:9
 
-MAINTAINER colhom@gmail.com
+LABEL author="colhom@gmail.com"
+LABEL maintainer="anywhere@live.at"
 
-ENV RCLONE_VERSION=v1.37
-ENV RCLONE_LINUX_SHASUM=e55aac6349f883c15834df63a7c77bee2af2834d43e15b52b3470aadfa1b631ef1ab684307b2375a593d4c34c04318a27a579c35b154cc1798c9d6247a321f2e
+ENV RCLONE_VERSION=v1.43.1
+ENV RCLONE_LINUX_SHASUM=7b31fb8a5c361e99afa20af161d6219babb10e2b86da1a85583cdcb6797d0e3c
 
 RUN apt update && \
     apt -y install wget unzip && \
     mkdir -p /tmp/rclone && cd /tmp/rclone && \
     wget --quiet https://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-amd64.zip && \
-    echo "${RCLONE_LINUX_SHASUM}  rclone-${RCLONE_VERSION}-linux-amd64.zip" | sha512sum -c && \
+    echo "${RCLONE_LINUX_SHASUM}  rclone-${RCLONE_VERSION}-linux-amd64.zip" | sha256sum -c && \
     unzip rclone-${RCLONE_VERSION}-linux-amd64.zip && \
     cp ./rclone-v*-linux-amd64/rclone /usr/sbin && \
     chown root:root /usr/sbin/rclone && \
